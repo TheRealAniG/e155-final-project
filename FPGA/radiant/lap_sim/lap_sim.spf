@@ -1,0 +1,16 @@
+<RadiantSimulationProject language="1" name="lap_sim" path="." simType="QuestaSim Qrun" stage="0" version="2.0">
+    <Source include="none" langstandard="System Verilog" path="../rtl/vga_timing.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../tb/tb_vga_timing.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/lab2_ta_counter.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/scene_renderer.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../tb/scene_renderer_tb.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../tb/tb_video_frame.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/demo_motion.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/track_renderer.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../tb/tb_track_frame.sv" type="VERILOG" worklib="work"/>
+    <SimLib value="pmi_work ovi_ice40up"/>
+    <GlbInc value=""/>
+    <Macro value=""/>
+    <Udo value=""/>
+    <TopModule instance="" language="VERILOG" name="tb_track_frame"/>
+</RadiantSimulationProject>

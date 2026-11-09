@@ -1,0 +1,8 @@
+-- Analyzing Verilog file 'C:/lscc/radiant/2026.1/cae_library/synthesis/verilog/iCE40UP.v' (VERI-1482)
+-- Analyzing Verilog file 'C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv' (VERI-1482)
+-- Analyzing Verilog file 'C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv' (VERI-1482)
+-- Analyzing Verilog file 'C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv' (VERI-1482)
+-- Analyzing Verilog file 'C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv' (VERI-1482)
+-- Analyzing Verilog file 'C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv' (VERI-1482)
+-- Analyzing Verilog file 'C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv' (VERI-1482)
+-- Analyzing Verilog file 'C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_video_frame.sv' (VERI-1482)

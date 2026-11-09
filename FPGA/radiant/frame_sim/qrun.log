@@ -1,0 +1,25 @@
+# *** Summary *********************************************
+#     qrun: Errors:   0, Warnings:   0
+#     vlog: Errors:   0, Warnings:   0
+#     vopt: Errors:   0, Warnings:   3
+#   Totals: Errors:   0, Warnings:   3
+# ** Note: (vsim-220) 'C:/lscc/radiant/2026.1/questasim/win64/../modelsim.ini' is used as the ini file.
+# vsim -L work -L pmi_work -L ovi_ice40up -lib qrun.out/work -wlf vsim.wlf -gui -do "view wave" -do "add wave /*" -do "run -all" -statslog qrun.out/stats_log qrun_opt -suppress vsim-7033,vsim-8630,3009,3389 -appendlog -l qrun.log 
+# Start time: 22:10:04 on Nov 08,2026
+# Loading sv_std.std
+# Loading work.tb_video_frame(fast)
+# Loading work.vga_timing(fast)
+# Loading work.lab2_ta_counter(fast)
+# Loading work.lab2_ta_counter(fast__1)
+# Loading work.scene_renderer(fast)
+# view wave
+# .main_pane.wave.interior.cs.body.pw.wf
+# add wave /*
+# run -all
+# Saved frame_   0.ppm (307200 pixels)
+# ** Note: $finish    : C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_video_frame.sv(65)
+#    Time: 16666519364 ps  Iteration: 1  Instance: /tb_video_frame
+# 1
+# Break in Module tb_video_frame at C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_video_frame.sv line 65
+# End time: 22:22:01 on Nov 08,2026, Elapsed time: 0:11:57
+# Errors: 0, Warnings: 0

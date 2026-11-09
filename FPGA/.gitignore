@@ -1,16 +1,22 @@
-# Lattice Radiant files
-*.html
-impl*/
-*.xml
-.build_status
-.run_manager.ini
-.recovery
-.spread_sheet.ini
-.spreadsheet_view.ini
-*.dir/
-*.log
-*.tcl
-*.ccl
-*.srp
-*.dmp
-._Real_._Math_.vhd
+# Radiant implementation output
+/radiant/impl_*/
+
+# Local Radiant session files
+/radiant/.build_status
+/radiant/.run_manager.ini
+/radiant/.recovery
+/radiant/.spread_sheet.ini
+/radiant/.spreadsheet_view.ini
+/radiant/*.log
+/radiant/*.dir/
+
+# Simulation output when run from FPGA/sim/
+sim/work/
+/sim/transcript
+/sim/vsim.
+# Generated Questa outputs
+/radiant/*_sim/qrun.out/
+/radiant/*_sim/*.wlf
+/radiant/*_sim/transcript
+/radiant/*_sim/*.ppm
+/radiant/transcript

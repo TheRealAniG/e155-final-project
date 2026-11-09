@@ -1,0 +1,22 @@
+# *** Summary *********************************************
+#     qrun: Errors:   0, Warnings:   0
+#     vlog: Errors:   0, Warnings:   0
+#     vopt: Errors:   0, Warnings:   3
+#   Totals: Errors:   0, Warnings:   3
+# ** Note: (vsim-220) 'C:/lscc/radiant/2026.1/questasim/win64/../modelsim.ini' is used as the ini file.
+# vsim -L work -L pmi_work -L ovi_ice40up -lib qrun.out/work -wlf vsim.wlf -gui -do "view wave" -do "add wave /*" -do "run -all" -statslog qrun.out/stats_log qrun_opt -suppress vsim-7033,vsim-8630,3009,3389 -appendlog -l qrun.log 
+# Start time: 22:03:02 on Nov 08,2026
+# Loading sv_std.std
+# Loading work.scene_renderer_tb(fast)
+# Loading work.scene_renderer(fast)
+# view wave
+# .main_pane.wave.interior.cs.body.pw.wf
+# add wave /*
+# run -all
+# PASS: blanking, four color bars, and one-pixel border
+# ** Note: $finish    : C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv(52)
+#    Time: 17 ns  Iteration: 0  Instance: /scene_renderer_tb
+# 1
+# Break in Module scene_renderer_tb at C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv line 52
+# End time: 22:03:37 on Nov 08,2026, Elapsed time: 0:00:35
+# Errors: 0, Warnings: 0
