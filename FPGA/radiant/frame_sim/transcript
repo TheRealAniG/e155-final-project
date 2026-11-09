@@ -1,0 +1,108 @@
+# //  Questa Lattice OEM Edition-64
+# //  Version 2025.2 win64 May 31 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# do C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/frame_sim/frame_sim.vdo
+# ** Note: (qrun-220) 'C:/lscc/radiant/2026.1/questasim/win64/../modelsim.ini' is used as the ini file.
+# Creating library 'qrun.out/work'.
+# Questa Lattice OEM Edition-64 vlog 2025.2 Compiler 2025.05 May 31 2025
+# 
+# 
+# Start time: 22:10:03 on Nov 08,2026
+# 
+# vlog -reportprogress 300 -L work -sv -L pmi_work -L ovi_ice40up C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_video_frame.sv -work qrun.out/work -statslog qrun.out/stats_log -csession=incr 
+# 
+# ** Note: (vlog-220) 'C:/lscc/radiant/2026.1/questasim/win64/../modelsim.ini' is used as the ini file.
+# 
+# -- Compiling module vga_timing
+# 
+# -- Compiling module demo_motion
+# 
+# -- Compiling module tb_vga_timing
+# 
+# -- Compiling module lab2_ta_counter
+# 
+# -- Compiling module scene_renderer
+# 
+# -- Compiling module scene_renderer_tb
+# 
+# -- Compiling module tb_video_frame
+# 
+# 
+# 
+# Top level modules:
+# 
+# 	demo_motion
+# 
+# 	tb_vga_timing
+# 
+# 	scene_renderer_tb
+# 
+# 	tb_video_frame
+# 
+# End time: 22:10:03 on Nov 08,2026, Elapsed time: 0:00:00
+# 
+# Errors: 0, Warnings: 0
+# 
+# Questa Lattice OEM Edition-64 vopt 2025.2 Compiler 2025.05 May 31 2025
+# 
+# 
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# 
+# Start time: 22:10:03 on Nov 08,2026
+# 
+# vopt -reportprogress 300 -L work "+acc" "+noacc+pmi_work.*" "+noacc+ovi_ice40up.*" -L pmi_work -L ovi_ice40up tb_video_frame -suppress vopt-7033 -work qrun.out/work -statslog qrun.out/stats_log -csession=incr -o qrun_opt -csessionid=3 
+# 
+# ** Note: (vopt-220) 'C:/lscc/radiant/2026.1/questasim/win64/../modelsim.ini' is used as the ini file.
+# 
+# 
+# 
+# Top level modules:
+# 
+# 	tb_video_frame
+# 
+# 
+# 
+# Analyzing design...
+# 
+# -- Loading module tb_video_frame
+# 
+# -- Loading module vga_timing
+# 
+# -- Loading module lab2_ta_counter
+# 
+# -- Loading module scene_renderer
+# 
+# ** Warning: (vopt-2108) Cannot find module '*' specified in +noacc option.
+# 
+# ** Warning: (vopt-2108) Cannot find module '*' specified in +noacc option.
+# 
+# Optimizing 5 design-units (inlining 0/5 module instances):
+# 
+# -- Optimizing module tb_video_frame(fast)
+# 
+# -- Optimizing module vga_timing(fast)
+# 
+# -- Optimizing module scene_renderer(fast)
+# 
+# -- Optimizing module lab2_ta_counter(fast__1)
+# 
+# -- Optimizing module lab2_ta_counter(fast)
+# 
+# Optimized design name is qrun_opt
+# 
+# End time: 22:10:04 on Nov 08,2026, Elapsed time: 0:00:01
+# 
+# Errors: 0, Warnings: 3
+# 
+vsim -L work -L pmi_work -L ovi_ice40up -lib qrun.out/work -wlf vsim.wlf -gui -do {view wave} -do {add wave /*} -do {run -all} -statslog qrun.out/stats_log qrun_opt -suppress vsim-7033,vsim-8630,3009,3389 -appendlog -l qrun.log

@@ -1,0 +1,177 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/render_sim
+vdemo_motion
+Z2 2C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv
+Z3 DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
+Z4 !s110 1794204181
+!i10b 1
+!s100 hFb<WkDz]_O3c0GZ3g_ES1
+IoI95[eSZz;8[aTW]fdYUm3
+S1
+R1
+w1794019500
+8C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv
+FC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv
+!i122 0
+L0 1 6
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2025.2;82
+r1
+!s85 0
+31
+Z7 !s108 1794204181.000000
+Z8 !s107 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv|
+Z9 !s90 -reportprogress|300|-L|work|-sv|-L|pmi_work|-L|ovi_ice40up|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv|-work|qrun.out/work|-statslog|qrun.out/stats_log|-csession=incr|
+!i113 0
+Z10 o-L work -sv -L pmi_work -L ovi_ice40up -work qrun.out/work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z11 tCvgOpt 0 defaultOptions 1085333592
+vlab2_ta_counter
+R2
+R3
+R4
+!i10b 1
+!s100 4>O3TjAP_IG3FC1?T:WNf0
+IiPkGH1nT?KM=LdmMBjl7@0
+S1
+R1
+w1789943748
+8C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv
+FC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv
+!i122 0
+L0 5 22
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+Tqrun_opt
+!i145 1
+!i144 0
+!s110 1794204182
+V`PWPIJ^0ETFfT:4iHi85Q3
+04 17 4 work scene_renderer_tb fast 0
+R0
+!s12f OEM25U2 
+!s12b OEM100
+!s124 OEM100
+!s135 nogc
+o-suppress vopt-7033 -L work +acc +noacc+pmi_work.* +noacc+ovi_ice40up.* -L pmi_work -L ovi_ice40up -work qrun.out/work
+tCvgOpt 0 defaultOptions 1107585188
+nqrun_opt
+OL;O;2025.2;82
+vscene_renderer
+R2
+R3
+R4
+!i10b 1
+!s100 bWzTCLlF27@md[]Ed`^SC3
+I]i:>^Cne5SnPXJcdfTLiK0
+S1
+R1
+w1794203966
+8C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv
+FC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv
+!i122 0
+L0 4 27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vscene_renderer_tb
+R2
+R3
+R4
+!i10b 1
+!s100 ikSKfLkdK?487mai:loNk3
+IIjzaC@ZKkM0WeUbE3i9dd0
+S1
+R1
+w1794203971
+8C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv
+FC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv
+!i122 0
+L0 1 54
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vtb_vga_timing
+R2
+R3
+R4
+!i10b 1
+!s100 3JOTGC?VLXcV;n:i^H9FS3
+I:2oDh@7>zDaf7XT?^@cDk3
+S1
+R1
+w1794202558
+8C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv
+FC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv
+!i122 0
+L0 1 65
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+vvga_timing
+R2
+R3
+R4
+!i10b 1
+!s100 h:hV3m:HjN=5]_4d8iBbZ2
+IQCPc]30ZKLR:3fnJS3Rma0
+S1
+R1
+w1794202559
+8C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv
+FC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv
+!i122 0
+L0 3 70
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
