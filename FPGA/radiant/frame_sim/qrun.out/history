@@ -1,3 +1,0 @@
-- Entry: 1
-  Time: Sun Nov 08 22:10:03 2026
-  Command: C:\lscc\radiant\2026.1\questasim\win64\qrun.exe -reportprogress 300 -guimode -clean -f C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/frame_sim/frame_sim.f 
