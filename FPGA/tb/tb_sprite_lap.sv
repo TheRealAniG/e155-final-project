@@ -23,12 +23,21 @@ module tb_sprite_lap;
     string filename;
 
     always #19.841 clk_pix = ~clk_pix;
-    vga_timing timing (.*);
+    vga_timing timing (
+        .clk_pix(clk_pix),
+        .reset_n(reset_n),
+        .sx(sx),
+        .sy(sy),
+        .visible(visible),
+        .hsync(hsync),
+        .vsync(vsync),
+        .vblank_tick(vblank_tick)
+    );
     // Drive frame state directly: demo_motion's fixed speed would require
     // hundreds of frames and does not provide smoothly changing headings.
     race_scene #(.BITMAP(BITMAP), .PALETTE(PALETTE)) scene (
-        .clk_pix, .visible, .sx, .sy, .car_center_x, .car_center_y,
-        .cos_q8, .sin_q8, .rgb
+        .clk_pix(clk_pix), .visible(visible), .sx(sx), .sy(sy), .car_center_x(car_center_x), .car_center_y(car_center_y),
+        .cos_q8(cos_q8), .sin_q8(sin_q8), .rgb(rgb)
     );
 
     task automatic point(input int x, y, input real angle);

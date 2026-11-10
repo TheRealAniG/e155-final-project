@@ -14,10 +14,19 @@ module tb_track_frame;
 
     always #19.841 clk_pix = ~clk_pix;
 
-    vga_timing timing (.*);
+    vga_timing timing (
+        .clk_pix(clk_pix),
+        .reset_n(reset_n),
+        .sx(sx),
+        .sy(sy),
+        .visible(visible),
+        .hsync(hsync),
+        .vsync(vsync),
+        .vblank_tick(vblank_tick)
+    );
     logic signed [10:0] car_center_x, car_center_y;
-    demo_motion motion (.clk_pix, .reset_n, .vblank_tick, .car_center_x, .car_center_y);
-    track_renderer renderer (.sx, .sy, .car_center_x, .car_center_y, .visible, .color_index);
+    demo_motion motion (.clk_pix(clk_pix), .reset_n(reset_n), .vblank_tick(vblank_tick), .car_center_x(car_center_x), .car_center_y(car_center_y));
+    track_renderer renderer (.sx(sx), .sy(sy), .car_center_x(car_center_x), .car_center_y(car_center_y), .visible(visible), .color_index(color_index));
 
     // Preview palette for track_renderer. Replace with DUT RGB when available.
     function automatic logic [23:0] palette(input logic [3:0] idx);

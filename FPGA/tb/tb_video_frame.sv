@@ -14,8 +14,17 @@ module tb_video_frame;
 
     always #19.841 clk_pix = ~clk_pix;
 
-    vga_timing timing (.*);
-    scene_renderer renderer (.sx, .sy, .visible, .color_index);
+    vga_timing timing (
+        .clk_pix(clk_pix),
+        .reset_n(reset_n),
+        .sx(sx),
+        .sy(sy),
+        .visible(visible),
+        .hsync(hsync),
+        .vsync(vsync),
+        .vblank_tick(vblank_tick)
+    );
+    scene_renderer renderer (.sx(sx), .sy(sy), .visible(visible), .color_index(color_index));
 
     // Preview palette matching scene_renderer. Replace with DUT RGB when available.
     function automatic logic [23:0] palette(input logic [3:0] idx);

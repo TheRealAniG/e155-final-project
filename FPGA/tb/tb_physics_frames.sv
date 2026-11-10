@@ -16,10 +16,19 @@ module tb_physics_frames;
     string filename, line;
 
     always #19.841 clk_pix = ~clk_pix;
-    vga_timing timing (.*);
+    vga_timing timing (
+        .clk_pix(clk_pix),
+        .reset_n(reset_n),
+        .sx(sx),
+        .sy(sy),
+        .visible(visible),
+        .hsync(hsync),
+        .vsync(vsync),
+        .vblank_tick(vblank_tick)
+    );
     race_scene #(.BITMAP(BITMAP), .PALETTE(PALETTE)) scene (
-        .clk_pix, .visible, .sx, .sy, .car_center_x, .car_center_y,
-        .cos_q8, .sin_q8, .rgb
+        .clk_pix(clk_pix), .visible(visible), .sx(sx), .sy(sy), .car_center_x(car_center_x), .car_center_y(car_center_y),
+        .cos_q8(cos_q8), .sin_q8(sin_q8), .rgb(rgb)
     );
 
     initial begin
@@ -48,7 +57,9 @@ module tb_physics_frames;
             car_center_y = y;
             cos_q8 = c;
             sin_q8 = s;
-            filename = $sformatf("physics_%04d.ppm", frame);
+            filename = $sformatf("%0d", frame);
+            while (filename.len() < 4) filename = {"0", filename};
+            filename = {"physics_", filename, ".ppm"};
             output_fd = $fopen(filename, "wb");
             if (!output_fd) $fatal(1, "Cannot write %s", filename);
             $fwrite(output_fd, "P6\n640 480\n255\n");
@@ -64,6 +75,10 @@ module tb_physics_frames;
                         $fatal(1, "Unexpected raster at (%0d,%0d)", sx, sy);
                     if ($isunknown(rgb) || $isunknown(scene.opaque))
                         $fatal(1, "Unknown RGB/sprite at (%0d,%0d)", sx, sy);
+                    if (scene.arch_opaque && rgb !== scene.arch_rgb)
+                        $fatal(1, "Checkpoint must draw above car at (%0d,%0d)", sx, sy);
+                    if (!scene.arch_opaque && scene.opaque && rgb !== scene.car_rgb)
+                        $fatal(1, "Car hidden outside checkpoint at (%0d,%0d)", sx, sy);
                     if (scene.opaque) sprite_pixels++;
                     $fwrite(output_fd, "%c%c%c", rgb[23:16], rgb[15:8], rgb[7:0]);
                     pixels++;

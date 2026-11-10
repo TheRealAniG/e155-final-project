@@ -20,10 +20,19 @@ module tb_sprite_frame;
 
     always #19.841 clk_pix = ~clk_pix;
 
-    vga_timing timing (.*);
+    vga_timing timing (
+        .clk_pix(clk_pix),
+        .reset_n(reset_n),
+        .sx(sx),
+        .sy(sy),
+        .visible(visible),
+        .hsync(hsync),
+        .vsync(vsync),
+        .vblank_tick(vblank_tick)
+    );
     logic signed [10:0] car_center_x, car_center_y;
-    demo_motion motion (.clk_pix, .reset_n, .vblank_tick, .car_center_x, .car_center_y);
-    race_scene #(.BITMAP(BITMAP), .PALETTE(PALETTE)) scene (.clk_pix, .sx, .sy, .car_center_x, .car_center_y, .cos_q8, .sin_q8, .visible, .rgb);
+    demo_motion motion (.clk_pix(clk_pix), .reset_n(reset_n), .vblank_tick(vblank_tick), .car_center_x(car_center_x), .car_center_y(car_center_y));
+    race_scene #(.BITMAP(BITMAP), .PALETTE(PALETTE)) scene (.clk_pix(clk_pix), .sx(sx), .sy(sy), .car_center_x(car_center_x), .car_center_y(car_center_y), .cos_q8(cos_q8), .sin_q8(sin_q8), .visible(visible), .rgb(rgb));
 
     initial begin
         fd = $fopen(BITMAP, "r");

@@ -1,15 +1,15 @@
-// Generate scan coordinates and sync signals for 640x480 VGA.
+//Description: Generate scan coordinates and sync signals for 640x480 VGA
 // reset is active low at this module's interface.
 module vga_timing (
     input  logic clk_pix,
     input  logic reset_n,
-	
+
     output logic signed [10:0] sx, sy,
     output logic visible,
     output logic hsync, vsync,
     output logic vblank_tick
 );
-	
+
     // Horizontal timing in pixel clocks
     localparam int H_ACTIVE = 640;
     localparam int H_FRONT  = 16;
@@ -35,7 +35,7 @@ module vga_timing (
     lab2_ta_counter #(
         .WIDTH(10),
         .MAX_COUNT(H_TOTAL - 1)
-    ) horizontal_counter (
+    ) i_HORIZONTAL_COUNTER (
         .clk     (clk_pix),
         .reset   (reset_n),
         .enable  (1'b1),
@@ -45,7 +45,7 @@ module vga_timing (
     lab2_ta_counter #(
         .WIDTH(10),
         .MAX_COUNT(V_TOTAL - 1)
-    ) vertical_counter (
+    ) i_VERTICAL_COUNTER (
         .clk     (clk_pix),
         .reset   (reset_n),
         .enable  (end_of_line),

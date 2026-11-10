@@ -1,13 +1,14 @@
-// The demo car follows the center of a rectangular track, clockwise.
+//Description: Move the demo car clockwise around a rectangular track
 module demo_motion (
     input logic clk_pix, reset_n, vblank_tick,
     output logic signed [10:0] car_center_x, car_center_y
 );
-    localparam int LEFT=96, RIGHT=544, TOP=96, BOTTOM=384, STEP=4;
+    localparam int LEFT = 96, RIGHT = 544, TOP = 96, BOTTOM = 384, STEP = 4;
     typedef enum logic [1:0] {EAST, SOUTH, WEST, NORTH} direction_t;
     direction_t direction, next_direction;
     logic signed [10:0] next_x, next_y;
 
+    //Next position and direction
     always_comb begin
         next_x = car_center_x;
         next_y = car_center_y;
@@ -44,6 +45,7 @@ module demo_motion (
         endcase
     end
 
+    //State updates only during vertical blanking
     always_ff @(posedge clk_pix or negedge reset_n) begin
         if (!reset_n) begin
             car_center_x <= LEFT;
