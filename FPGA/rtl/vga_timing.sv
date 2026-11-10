@@ -1,5 +1,5 @@
 // Generate scan coordinates and sync signals for 640x480 VGA.
-// reset is active high at this module's interface.
+// reset is active low at this module's interface.
 module vga_timing (
     input  logic clk_pix,
     input  logic reset_n,

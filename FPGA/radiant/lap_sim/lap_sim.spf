@@ -8,9 +8,13 @@
     <Source include="none" langstandard="System Verilog" path="../rtl/demo_motion.sv" type="VERILOG" worklib="work"/>
     <Source include="none" langstandard="System Verilog" path="../rtl/track_renderer.sv" type="VERILOG" worklib="work"/>
     <Source include="none" langstandard="System Verilog" path="../tb/tb_track_frame.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/race_scene.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/car_sprite.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../tb/tb_sprite_frame.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../tb/tb_sprite_lap.sv" type="VERILOG" worklib="work"/>
     <SimLib value="pmi_work ovi_ice40up"/>
     <GlbInc value=""/>
     <Macro value=""/>
     <Udo value=""/>
-    <TopModule instance="" language="VERILOG" name="tb_track_frame"/>
+    <TopModule instance="" language="VERILOG" name="tb_sprite_lap"/>
 </RadiantSimulationProject>

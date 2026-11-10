@@ -12,6 +12,10 @@
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv" 
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/track_renderer.sv" 
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_track_frame.sv" 
+"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/race_scene.sv" 
+"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/car_sprite.sv" 
+"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_frame.sv" 
+"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_lap.sv" 
 -sv
 -optionset VOPTDEBUG
 +noacc+pmi_work.*
@@ -22,7 +26,7 @@
 -end
 
 -gui
--top tb_track_frame
+-top tb_sprite_lap
 -vsim.options
   -suppress vsim-7033,vsim-8630,3009,3389
 -end

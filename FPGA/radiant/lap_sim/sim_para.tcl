@@ -5,15 +5,15 @@ set ::bali::simulation::Para(DEVICEFAMILYNAME) {iCE40UP}
 set ::bali::simulation::Para(PROJECT) {lap_sim}
 set ::bali::simulation::Para(MDOFILE) {}
 set ::bali::simulation::Para(PROJECTPATH) {C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/lap_sim}
-set ::bali::simulation::Para(FILELIST) {"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_video_frame.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/track_renderer.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_track_frame.sv" }
+set ::bali::simulation::Para(FILELIST) {"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_video_frame.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/track_renderer.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_track_frame.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/race_scene.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/car_sprite.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_frame.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_lap.sv" }
 set ::bali::simulation::Para(GLBINCLIST) {}
-set ::bali::simulation::Para(INCLIST) {"none" "none" "none" "none" "none" "none" "none" "none" "none"}
-set ::bali::simulation::Para(WORKLIBLIST) {"work" "work" "work" "work" "work" "work" "work" "work" "work" }
-set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" }
-set ::bali::simulation::Para(LANGSTDLIST) {"System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" }
+set ::bali::simulation::Para(INCLIST) {"none" "none" "none" "none" "none" "none" "none" "none" "none" "none" "none" "none" "none"}
+set ::bali::simulation::Para(WORKLIBLIST) {"work" "work" "work" "work" "work" "work" "work" "work" "work" "work" "work" "work" "work" }
+set ::bali::simulation::Para(COMPLIST) {"VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" "VERILOG" }
+set ::bali::simulation::Para(LANGSTDLIST) {"System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" "System Verilog" }
 set ::bali::simulation::Para(SIMLIBLIST) {pmi_work ovi_ice40up}
 set ::bali::simulation::Para(MACROLIST) {}
-set ::bali::simulation::Para(SIMULATIONTOPMODULE) {tb_track_frame}
+set ::bali::simulation::Para(SIMULATIONTOPMODULE) {tb_sprite_lap}
 set ::bali::simulation::Para(SIMULATIONINSTANCE) {}
 set ::bali::simulation::Para(LANGUAGE) {VERILOG}
 set ::bali::simulation::Para(SDFPATH)  {}

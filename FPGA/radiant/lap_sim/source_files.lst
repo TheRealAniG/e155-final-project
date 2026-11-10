@@ -7,3 +7,7 @@
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv=verilog,work,System Verilog"
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/track_renderer.sv=verilog,work,System Verilog"
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_track_frame.sv=verilog,work,System Verilog"
+"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/race_scene.sv=verilog,work,System Verilog"
+"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/car_sprite.sv=verilog,work,System Verilog"
+"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_frame.sv=verilog,work,System Verilog"
+"C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_lap.sv=verilog,work,System Verilog"

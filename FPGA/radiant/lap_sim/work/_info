@@ -1,0 +1,36 @@
+m255
+K4
+z2
+!s11f vlog 2025.2 2025.05, May 31 2025
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/lap_sim
+vvga_timing
+2C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv
+DXx6 sv_std 3 std 0 22 @5XbY]_OacJl=`ToSm<M^0
+!s110 1794275231
+!i10b 1
+!s100 h:hV3m:HjN=5]_4d8iBbZ2
+I2QRX64`2JAamUCd^D72Ol0
+S1
+R0
+w1794274060
+8C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv
+FC:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv
+!i122 0
+L0 3 70
+VDg1SIo80bB@j0V0VzS_@n1
+OL;L;2025.2;82
+r1
+!s85 0
+31
+!s108 1794275230.000000
+!s107 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv|
+!s90 -reportprogress|300|-work|work|C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv|
+!i113 0
+o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+tCvgOpt 0 defaultOptions 1085333592
