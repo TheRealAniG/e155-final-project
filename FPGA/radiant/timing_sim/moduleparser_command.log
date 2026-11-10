@@ -1,1 +1,0 @@
-C:/lscc/radiant/2026.1/bin/nt64/moduleparser.exe -PROJ timing_sim -pf C:/lscc/radiant/2026.1/cae_library/synthesis/verilog/iCE40UP.v -lib iCE40UP -sort -lst C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/timing_sim/source_files.lst

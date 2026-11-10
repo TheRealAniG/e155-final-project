@@ -20,3 +20,22 @@ sim/work/
 /radiant/*_sim/transcript
 /radiant/*_sim/*.ppm
 /radiant/transcript
+
+# Simulator artifacts, including sprite_rotate and other simulation folders.
+# Keep RTL, assets, project definitions and simulation launch files tracked.
+**/qrun.out/
+**/work/
+**/transcript
+*.wlf
+*.vcd
+*.vvp
+*.ppm
+*.log
+/radiant/.ng_run_manager.ini
+/radiant/.setting.ini
+/radiant/reportview.xml
+/radiant/*_tcl.html
+/radiant/**/*.sort
+/radiant/**/*.tops
+/radiant/**/source_files.lst
+/radiant/**/sim_para.tcl

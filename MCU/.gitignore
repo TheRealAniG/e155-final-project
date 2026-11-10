@@ -1,5 +1,11 @@
-# Segger Embedded Studio
+# SEGGER build output and machine-local debug sessions
 **/Output/
 **/Debug/
+**/Release/
 *.emSession
 *.jlink
+*.o
+*.obj
+*.elf
+*.axf
+*.map

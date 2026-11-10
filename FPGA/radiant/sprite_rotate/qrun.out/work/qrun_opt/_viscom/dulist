@@ -1,7 +1,0 @@
-1 15 lab2_ta_counter 4 fast 96 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/sprite_rotate/qrun.out/work 0 0 0 0 36 0
-1 15 lab2_ta_counter 7 fast__1 96 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/sprite_rotate/qrun.out/work 0 0 0 0 36 0
-1 10 vga_timing 4 fast 96 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/sprite_rotate/qrun.out/work 0 0 0 0 117 0
-1 11 demo_motion 4 fast 96 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/sprite_rotate/qrun.out/work 0 0 131072 0 123 0
-1 10 car_sprite 4 fast 96 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/sprite_rotate/qrun.out/work 0 0 0 0 108 0
-1 10 race_scene 4 fast 96 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/sprite_rotate/qrun.out/work 0 0 0 0 144 0
-1 15 tb_sprite_frame 4 fast 96 C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/sprite_rotate/qrun.out/work 0 0 0 0 213 0
