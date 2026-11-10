@@ -4,6 +4,7 @@ module race_scene #(
 ) (
     input logic clk_pix, visible,
     input logic signed [10:0] sx, sy, car_center_x, car_center_y,
+    input logic signed [9:0] cos_q8, sin_q8,
     output logic [23:0] rgb
 );
     function automatic logic inside_rect(input integer x, y, left, top, right, bottom);
@@ -17,7 +18,7 @@ module race_scene #(
     logic opaque;
     logic [23:0] car_rgb;
     car_sprite #(.BITMAP(BITMAP), .PALETTE(PALETTE)) car (
-        .clk_pix, .sx, .sy, .car_center_x, .car_center_y, .opaque, .rgb(car_rgb)
+        .clk_pix, .sx, .sy, .car_center_x, .car_center_y, .cos_q8, .sin_q8, .opaque, .rgb(car_rgb)
     );
     always_comb begin
         if (!visible) rgb = 24'h000000;

@@ -3,6 +3,10 @@ module tb_sprite_frame;
     timeunit 1ns;
     timeprecision 1ps;
     parameter int FRAMES = 8;
+    parameter real START_DEG = 0.0;
+    parameter real STEP_DEG = 17.0;
+    real radians;
+    logic signed [9:0] cos_q8, sin_q8;
     parameter BITMAP = "../../assets/car.mem";
     parameter PALETTE = "../../assets/car_palette.mem";
     logic clk_pix = 0;
@@ -19,7 +23,7 @@ module tb_sprite_frame;
     vga_timing timing (.*);
     logic signed [10:0] car_center_x, car_center_y;
     demo_motion motion (.clk_pix, .reset_n, .vblank_tick, .car_center_x, .car_center_y);
-    race_scene #(.BITMAP(BITMAP), .PALETTE(PALETTE)) scene (.clk_pix, .sx, .sy, .car_center_x, .car_center_y, .visible, .rgb);
+    race_scene #(.BITMAP(BITMAP), .PALETTE(PALETTE)) scene (.clk_pix, .sx, .sy, .car_center_x, .car_center_y, .cos_q8, .sin_q8, .visible, .rgb);
 
     initial begin
         fd = $fopen(BITMAP, "r");
@@ -35,6 +39,10 @@ module tb_sprite_frame;
 
         for (int frame = 0; frame < FRAMES; frame++) begin
             if (vblank_tick !== 1'b1) $fatal(1, "Expected start of frame");
+            radians = (START_DEG + frame * STEP_DEG) * 3.141592653589793 / 180.0;
+            // Integral casts round the real coefficients to the nearest integer.
+            cos_q8 = int'(256.0 * $cos(radians));
+            sin_q8 = int'(256.0 * $sin(radians));
             filename = $sformatf("sprite_%04d.ppm", frame);
             fd = $fopen(filename, "wb");
             if (!fd) $fatal(1, "Cannot open %s", filename);

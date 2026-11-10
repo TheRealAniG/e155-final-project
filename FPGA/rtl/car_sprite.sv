@@ -6,6 +6,7 @@ module car_sprite #(
 ) (
     input logic clk_pix,
     input logic signed [10:0] sx, sy, car_center_x, car_center_y,
+    input logic signed [9:0] cos_q8, sin_q8,
     output logic opaque,
     output logic [23:0] rgb
 );
@@ -16,9 +17,13 @@ module car_sprite #(
         $readmemh(PALETTE, colors);
     end
 
-    logic signed [12:0] col, row;
-    assign col = sx + 1 - car_center_x + 16;
-    assign row = sy - car_center_y + 16;
+    logic signed [12:0] dx, dy;
+    logic signed [23:0] col, row;
+    assign dx = sx + 1 - car_center_x;
+    assign dy = sy - car_center_y;
+    // Inverse map, round to nearest texel, then shift origin into the ROM.
+    assign col = ((dx*cos_q8 + dy*sin_q8 + 24'sd128) >>> 8) + 24'sd16;
+    assign row = ((dy*cos_q8 - dx*sin_q8 + 24'sd128) >>> 8) + 24'sd16;
     logic covered, covered_q;
     logic [3:0] index_q;
     assign covered = col >= 0 && col < 32 && row >= 0 && row < 32;

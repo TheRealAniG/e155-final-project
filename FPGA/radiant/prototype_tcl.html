@@ -40,7 +40,52 @@ if (a)
 <BODY>
 
 <DIV id="content" onclick="hideTocList()"><PRE>
+<A name="pn261109154213"></A><B><U><big>pn261109154213</big></U></B>
+#Start recording tcl command: 11/8/2026 21:10:59
+#Project Location: C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant; Project name: prototype
+prj_create -name "prototype" -impl "impl_1" -dev iCE40UP5K-SG48I -performance "High-Performance_1.2V" -synthesis "lse"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/vga_timing.sv"
+prj_save 
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_vga_timing.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/lab2_ta_counter.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/timing_sim/timing_sim.spf"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/timing_sim/timing_sim.spf"
+prj_remove_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/scene_renderer.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/scene_renderer_tb.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/render_sim/render_sim.spf"
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+prj_run Synthesis -impl impl_1
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_video_frame.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/frame_sim/frame_sim.spf"
+prj_remove_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/demo_motion.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/track_renderer.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_track_frame.sv"
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/lap_sim/lap_sim.spf"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/race_scene.sv" "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/car_sprite.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_frame.sv"
+prj_add_source "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/radiant/sprite_sim/sprite_sim.spf"
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+#Stop recording: 11/9/2026 15:42:13
+
+
+
 </PRE></DIV>
+
+<DIV id="toc" class="radiant"><span onmousemove="showTocList()">Contents</span>
+<UL id="toc_list">
+<LI><A href=#pn261109154213>pn261109154213</A></LI>
+</UL>
+</DIV>
 
 <button id="back_to_top" class="radiant" onclick="scrollToTop()">&lt;</button>
 <script type="text/javascript">

@@ -57,3 +57,5 @@ run -all
 #    Time: 133331599364 ps  Iteration: 1  Instance: /tb_sprite_frame
 # 1
 # Break in Module tb_sprite_frame at C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_frame.sv line 61
+# End time: 23:09:35 on Nov 08,2026, Elapsed time: 0:10:31
+# Errors: 0, Warnings: 0
