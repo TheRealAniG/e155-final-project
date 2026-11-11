@@ -18,6 +18,7 @@
 #include "STM32L432KC_FLASH.h"
 #include "STM32L432KC_SPI.h"
 #include "STM32L432KC_ADC.h"
+#include "STM32L432KC_DMA.h"
 
 // Global defines
 

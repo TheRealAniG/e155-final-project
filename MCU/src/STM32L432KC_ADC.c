@@ -2,9 +2,7 @@
 // Source code for ADC functions
 
 
-
 #include "STM32L432KC_ADC.h"
-
 
 
 void initADC(void){

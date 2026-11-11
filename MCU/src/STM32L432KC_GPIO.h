@@ -6,6 +6,7 @@
 
 #include <stdint.h> // Include stdint header
 #include <stm32l432xx.h>
+#include "STM32L432KC_RCC.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Definitions
