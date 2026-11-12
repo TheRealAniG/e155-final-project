@@ -54,8 +54,8 @@ module vga_timing (
 
     // Screen coordinates: visible image starts at (0, 0).
     // The leading zero preserves counts above 511 when casting to signed.
-    assign sx = $signed({1'b0, h_count}) - H_BLANK;
-    assign sy = $signed({1'b0, v_count}) - V_BLANK;
+    assign sx = $signed({1'b0, h_count}) - 11'(H_BLANK);
+    assign sy = $signed({1'b0, v_count}) - 11'(V_BLANK);
 
     // Output logic: front porch, sync pulse, back porch, then visible pixels.
     assign visible = (sx >= 0) && (sy >= 0);

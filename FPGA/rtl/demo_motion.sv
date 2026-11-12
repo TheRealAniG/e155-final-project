@@ -3,7 +3,8 @@ module demo_motion (
     input logic clk_pix, reset_n, vblank_tick,
     output logic signed [10:0] car_center_x, car_center_y
 );
-    localparam int LEFT = 96, RIGHT = 544, TOP = 96, BOTTOM = 384, STEP = 4;
+    localparam logic signed [10:0] LEFT = 11'sd96, RIGHT = 11'sd544,
+                                  TOP = 11'sd96, BOTTOM = 11'sd384, STEP = 11'sd4;
     typedef enum logic [1:0] {EAST, SOUTH, WEST, NORTH} direction_t;
     direction_t direction, next_direction;
     logic signed [10:0] next_x, next_y;

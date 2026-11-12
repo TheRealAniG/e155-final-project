@@ -11,6 +11,9 @@ module race_scene #(
     logic road, finish_line, light_square;
     logic opaque, arch_opaque;
     logic [23:0] car_rgb, arch_rgb;
+    logic [23:0] background, background_q [0:3];
+    logic [23:0] arch_rgb_q [0:3];
+    logic [3:0] visible_q, arch_opaque_q;
 
     function automatic logic inside_rect(input integer x, y, left, top, right, bottom);
         return x >= left && x < right && y >= top && y < bottom;
@@ -45,13 +48,28 @@ module race_scene #(
         .rgb(arch_rgb)
     );
 
+    // Match the sprite's four stages using the same input pixel.
+    always_comb begin
+        if (finish_line) background = light_square ? 24'hffffff : 24'h101010;
+        else if (road) background = 24'h454951;
+        else background = 24'h287348;
+    end
+    always_ff @(posedge clk_pix) begin
+        visible_q <= {visible_q[2:0], visible};
+        arch_opaque_q <= {arch_opaque_q[2:0], arch_opaque};
+        background_q[0] <= background;
+        arch_rgb_q[0] <= arch_rgb;
+        for (int i = 1; i < 4; i++) begin
+            background_q[i] <= background_q[i-1];
+            arch_rgb_q[i] <= arch_rgb_q[i-1];
+        end
+    end
+
     //Pixel priority: blanking, overhead arches, car, finish, road, grass
     always_comb begin
-        if (!visible) rgb = 24'h000000;
-        else if (arch_opaque) rgb = arch_rgb;
+        if (!visible_q[3]) rgb = 24'h000000;
+        else if (arch_opaque_q[3]) rgb = arch_rgb_q[3];
         else if (opaque) rgb = car_rgb;
-        else if (finish_line) rgb = light_square ? 24'hffffff : 24'h101010;
-        else if (road) rgb = 24'h454951;
-        else rgb = 24'h287348;
+        else rgb = background_q[3];
     end
 endmodule

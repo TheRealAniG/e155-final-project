@@ -4,7 +4,7 @@ module reset_sync (
     input  logic reset_n,
     output logic reset_sync_n
 );
-    (* ASYNC_REG = "TRUE" *) logic reset_meta_n;
+    (* syn_preserve = 1 *) logic reset_meta_n;
 
     //Reset timing
     always_ff @(posedge clk or negedge reset_n) begin

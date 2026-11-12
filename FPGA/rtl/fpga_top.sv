@@ -5,7 +5,6 @@ module fpga_top #(
     parameter BITMAP = "../assets/car.mem",
     parameter PALETTE = "../assets/car_palette.mem"
 ) (
-    input  logic clk_pix,
     input  logic reset_n,
     output logic [RGB_BITS-1:0] vga_red, vga_green, vga_blue,
     output logic vga_hsync, vga_vsync
@@ -16,6 +15,14 @@ module fpga_top #(
     logic signed [10:0] car_center_x, car_center_y;
     logic signed [9:0] cos_q8, sin_q8;
     logic [23:0] rgb;
+    logic [3:0] hsync_q, vsync_q;
+    logic clk_pix;
+
+    HSOSC #(.CLKHF_DIV("0b01")) i_HSOSC (
+        .CLKHFPU(1'b1),
+        .CLKHFEN(1'b1),
+        .CLKHF(clk_pix)
+    );
 
     //Reset synchronizer
     reset_sync i_RESET_SYNC (
@@ -77,7 +84,18 @@ module fpga_top #(
         .rgb(rgb)
     );
 
-    //VGA output registers: RGB and both syncs have the same one-cycle delay.
+    // Match the scene's four stages before the common output register.
+    always_ff @(posedge clk_pix or negedge reset_pix_n) begin
+        if (!reset_pix_n) begin
+            hsync_q <= '1;
+            vsync_q <= '1;
+        end else begin
+            hsync_q <= {hsync_q[2:0], hsync};
+            vsync_q <= {vsync_q[2:0], vsync};
+        end
+    end
+
+    //VGA output registers.
     // RGB_BITS must be 1..8; select it to match the breakout resistor DAC.
     always_ff @(posedge clk_pix or negedge reset_pix_n) begin
         if (!reset_pix_n) begin
@@ -90,8 +108,8 @@ module fpga_top #(
             vga_red <= rgb[23 -: RGB_BITS];
             vga_green <= rgb[15 -: RGB_BITS];
             vga_blue <= rgb[7 -: RGB_BITS];
-            vga_hsync <= hsync;
-            vga_vsync <= vsync;
+            vga_hsync <= hsync_q[3];
+            vga_vsync <= vsync_q[3];
         end
     end
 endmodule

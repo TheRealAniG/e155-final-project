@@ -3,7 +3,7 @@ module tb_fpga_top;
     timeunit 1ns;
     timeprecision 1ps;
 
-    logic clk_pix = 1'b0;
+    wire clk_pix = dut.clk_pix;
     logic reset_n = 1'b0;
     logic [3:0] vga_red, vga_green, vga_blue;
     logic vga_hsync, vga_vsync;
@@ -12,13 +12,10 @@ module tb_fpga_top;
     logic signed [10:0] frame_x, frame_y;
     int active_pixels = 0, hsync_pixels = 0, vsync_pixels = 0, ticks = 0;
 
-    always #19.841 clk_pix = ~clk_pix;
-
     fpga_top #(
         .BITMAP("../../assets/car.mem"),
         .PALETTE("../../assets/car_palette.mem")
     ) dut (
-        .clk_pix(clk_pix),
         .reset_n(reset_n),
         .vga_red(vga_red),
         .vga_green(vga_green),
@@ -35,14 +32,15 @@ module tb_fpga_top;
         if (dut.reset_pix_n !== 1'b0) $fatal(1, "Reset released too early");
         @(negedge clk_pix);
         if (dut.reset_pix_n !== 1'b1) $fatal(1, "Reset did not release");
+        repeat (8) @(negedge clk_pix); // Fill the scene and sync pipelines.
 
         repeat (800 * 525) begin
             @(posedge clk_pix);
             // Capture the pre-edge scene and syncs, before NBA updates.
             expected_rgb = {dut.rgb[23:20], dut.rgb[15:12], dut.rgb[7:4]};
-            expected_hsync = dut.hsync;
-            expected_vsync = dut.vsync;
-            expected_visible = dut.visible;
+            expected_hsync = dut.hsync_q[3];
+            expected_vsync = dut.vsync_q[3];
+            expected_visible = dut.i_RACE_SCENE.visible_q[3];
             if (!dut.hsync) hsync_pixels++;
             if (!dut.vsync) vsync_pixels++;
             if (dut.vblank_tick) ticks++;
@@ -85,4 +83,12 @@ module tb_fpga_top;
         #20ms;
         $fatal(1, "VGA top test timed out");
     end
+endmodule
+
+// Behavioral model of the enabled internal oscillator, divided to 24 MHz.
+module HSOSC #(parameter CLKHF_DIV = "0b01") (
+    input CLKHFPU, CLKHFEN, output logic CLKHF = 0
+);
+    timeunit 1ns; timeprecision 1ps;
+    always #20.833 CLKHF = CLKHFPU && CLKHFEN ? ~CLKHF : 1'b0;
 endmodule

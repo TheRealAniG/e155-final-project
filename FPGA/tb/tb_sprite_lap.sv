@@ -23,6 +23,14 @@ module tb_sprite_lap;
     string filename;
 
     always #19.841 clk_pix = ~clk_pix;
+    // Coordinates belonging to the compositor's four-stage output.
+    logic signed [10:0] pixel_x [0:3], pixel_y [0:3];
+    always @(posedge clk_pix) begin
+        pixel_x[0] <= sx; pixel_y[0] <= sy;
+        for (int i = 1; i < 4; i++) begin
+            pixel_x[i] <= pixel_x[i-1]; pixel_y[i] <= pixel_y[i-1];
+        end
+    end
     vga_timing timing (
         .clk_pix(clk_pix),
         .reset_n(reset_n),
@@ -96,12 +104,13 @@ module tb_sprite_lap;
         fd = $fopen(PALETTE, "r");
         if (!fd) $fatal(1, "Cannot open %s", PALETTE);
         $fclose(fd);
-        repeat (2) @(negedge clk_pix);
+        repeat (6) @(negedge clk_pix);
         reset_n = 1;
         #1ns;
+        repeat (4) @(negedge clk_pix); // Start at the delayed frame boundary.
 
         for (int frame = 0; frame < FRAMES; frame++) begin
-            if (vblank_tick !== 1'b1) $fatal(1, "Expected frame boundary");
+            if (pixel_x[3] !== -160 || pixel_y[3] !== -45) $fatal(1, "Expected frame boundary");
             car_center_x = path_x[frame];
             car_center_y = path_y[frame];
             radians = (heading[frame] - ARTWORK_HEADING_DEG) * PI / 180.0;
@@ -114,15 +123,15 @@ module tb_sprite_lap;
             pixels = 0;
             sprite_pixels = 0;
             repeat (800 * 525) begin
-                if (visible) begin
-                    if (sx !== pixels % 640 || sy !== pixels / 640)
+                if (scene.visible_q[3]) begin
+                    if (pixel_x[3] !== pixels % 640 || pixel_y[3] !== pixels / 640)
                         $fatal(1, "Unexpected coordinate (%0d,%0d)", sx, sy);
                     if ($isunknown(rgb) || $isunknown(scene.opaque))
                         $fatal(1, "Unknown rendering at (%0d,%0d)", sx, sy);
                     if (scene.opaque) sprite_pixels++;
                     $fwrite(fd, "%c%c%c", rgb[23:16], rgb[15:8], rgb[7:0]);
                     pixels++;
-                end else if (visible !== 1'b0 || rgb !== 24'd0)
+                end else if (scene.visible_q[3] !== 1'b0 || rgb !== 24'd0)
                     $fatal(1, "Invalid blanking at (%0d,%0d)", sx, sy);
                 @(negedge clk_pix);
             end
