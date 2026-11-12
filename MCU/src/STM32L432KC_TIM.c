@@ -49,3 +49,8 @@ void initTIM6ADC(void){
     // Clear update interrupt flag
     TIM6->SR &= ~TIM_SR_UIF;
 }
+
+void startTIM6ADC(void){
+    // Start TIM6 to generate ADC triggers
+    TIM6->CR1 |= TIM_CR1_CEN;
+}

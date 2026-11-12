@@ -21,4 +21,6 @@ void delay_micros(TIM_TypeDef * TIMx, uint32_t us);
 // Initialize TIM6 to trigger ADC1 at 1 kHz
 void initTIM6ADC(void);
 
-#endif
+void startTIM6ADC(void);
+
+#endif // STM32L4_TIM_H
