@@ -1,15 +1,30 @@
 // InputProcessing.c
-// Source code for input processing functions
+// Source code for Input Processing functions
 
 #include "InputProcessing.h"
 
-#define JOYSTICK_CENTER   2048.0f
-#define JOYSTICK_DEADZONE 0.05f
-#define ADC_MAX           4095.0f
+#define JOYSTICK_X_MIN 0.0f
+#define JOYSTICK_X_MAX 4080.0f
+#define JOYSTICK_Y_MIN 0.0f
+#define JOYSTICK_Y_MAX 4073.0f
 
-// Normalize joystick readings to approximately -1.0 to +1.0
-static float normalizeJoystick(uint16_t rawValue) {
-    float normalized = ((float)rawValue - JOYSTICK_CENTER) / JOYSTICK_CENTER;
+#define JOYSTICK_DEADZONE 0.05f
+
+#define THROTTLE_MIN 475.0f
+#define THROTTLE_MAX 3533.0f
+
+// Limit a value to a specified range
+static float clamp(float value, float min, float max) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}
+
+// Normalize joystick readings from -1.0 to +1.0
+static float normalizeJoystick(uint16_t rawValue, float min, float max) {
+    float normalized = 2.0f * ((float)rawValue - min) / (max - min) - 1.0f;
+
+    normalized = clamp(normalized, -1.0f, 1.0f);
 
     // Ignore small movements near the center
     if (normalized > -JOYSTICK_DEADZONE && normalized < JOYSTICK_DEADZONE) {
@@ -21,7 +36,9 @@ static float normalizeJoystick(uint16_t rawValue) {
 
 // Normalize throttle readings from 0.0 to 1.0
 static float normalizeThrottle(uint16_t rawValue) {
-    return (float)rawValue / ADC_MAX;
+    float normalized = ((float)rawValue - THROTTLE_MIN) / (THROTTLE_MAX - THROTTLE_MIN);
+
+    return clamp(normalized, 0.0f, 1.0f);
 }
 
 // Process sensor inputs
@@ -29,8 +46,8 @@ ControlInputs processInputs(uint16_t rawX, uint16_t rawY, uint16_t rawThrottle, 
 
     ControlInputs inputs;
 
-    inputs.steering = normalizeJoystick(rawX);
-    inputs.joystickY = normalizeJoystick(rawY);
+    inputs.steering = normalizeJoystick(rawX, JOYSTICK_X_MIN, JOYSTICK_X_MAX);
+    inputs.joystickY = normalizeJoystick(rawY, JOYSTICK_Y_MIN, JOYSTICK_Y_MAX);
     inputs.throttle = normalizeThrottle(rawThrottle);
     inputs.brakePressed = brakePressed;
 
