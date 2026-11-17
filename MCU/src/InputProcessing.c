@@ -14,7 +14,7 @@
 #define THROTTLE_MAX 3533.0f
 
 // Limit a value to a specified range
-static float clamp(float value, float min, float max) {
+static float limitRange(float value, float min, float max) {
     if (value < min) return min;
     if (value > max) return max;
     return value;
@@ -24,7 +24,7 @@ static float clamp(float value, float min, float max) {
 static float normalizeJoystick(uint16_t rawValue, float min, float max) {
     float normalized = 2.0f * ((float)rawValue - min) / (max - min) - 1.0f;
 
-    normalized = clamp(normalized, -1.0f, 1.0f);
+    normalized = limitRange(normalized, -1.0f, 1.0f);
 
     // Ignore small movements near the center
     if (normalized > -JOYSTICK_DEADZONE && normalized < JOYSTICK_DEADZONE) {
@@ -38,7 +38,7 @@ static float normalizeJoystick(uint16_t rawValue, float min, float max) {
 static float normalizeThrottle(uint16_t rawValue) {
     float normalized = ((float)rawValue - THROTTLE_MIN) / (THROTTLE_MAX - THROTTLE_MIN);
 
-    return clamp(normalized, 0.0f, 1.0f);
+    return limitRange(normalized, 0.0f, 1.0f);
 }
 
 // Process sensor inputs

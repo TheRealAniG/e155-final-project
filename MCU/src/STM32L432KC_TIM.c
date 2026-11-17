@@ -54,3 +54,18 @@ void startTIM6ADC(void){
     // Start TIM6 to generate ADC triggers
     TIM6->CR1 |= TIM_CR1_CEN;
 }
+
+
+int tim6UpdateReady(void) {
+
+    // Check if TIM6 has completed a 1 ms period
+    if (TIM6->SR & TIM_SR_UIF) {
+
+        // Clear the update flag
+        TIM6->SR &= ~TIM_SR_UIF;
+
+        return 1;
+    }
+
+    return 0;
+}

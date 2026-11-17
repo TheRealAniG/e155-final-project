@@ -15,7 +15,6 @@
 
 // Initialize vehicle state
 void initVehiclePhysics(CarState *car, float startX, float startY, float startHeading) {
-
     car->x = startX;
     car->y = startY;
     car->speed = 0.0f;
@@ -38,7 +37,7 @@ void updateVehiclePhysics(CarState *car, const ControlInputs *inputs, float dt) 
     // Update speed based on throttle and braking
     if (inputs->brakePressed) {
         car->speed -= BRAKE_DECEL * dt;
-    } else if (inputs->throttle > 0.0f) {
+    } else if (inputs->throttle > 0.05f) {
         car->speed += inputs->throttle * ACCELERATION * dt;
     } else {
         car->speed -= DRAG_DECEL * dt;

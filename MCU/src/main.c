@@ -1,6 +1,11 @@
-
 #include <stdio.h>
 #include "STM32L432KC.h"
+#include "InputProcessing.h"
+#include "VehiclePhysics.h"
+
+#define BRAKE_PIN PA0
+#define PHYSICS_DT 0.001f
+#define PI 3.14159265f
 
 // Redirect printf output to debug terminal
 int _write(int file, char *ptr, int len) {
@@ -15,43 +20,62 @@ int main(void) {
     configureFlash();
     configureClock();
 
-    // Initialize peripherals
+    // Initialize brake button
+    gpioEnable(GPIO_PORT_A);
+    pinMode(BRAKE_PIN, GPIO_INPUT);
+    pinResistor(BRAKE_PIN, GPIO_PULL_UP);
+
+    // Initialize ADC, DMA, and timer
     initADC();
     initDMA();
     initTIM6ADC();
+
+    // Initialize vehicle at (96, 96), facing right
+    CarState car;
+    initVehiclePhysics(&car, 96.0f, 96.0f, 0.0f);
 
     // Start ADC sampling
     startADC();
     startTIM6ADC();
 
-    // Allow ADC/DMA to collect initial readings
+    // Allow initial ADC readings to become available
     delay_micros(TIM7, 10000);
 
-    // Initialize min and max with the first reading
-    uint16_t throttleMin = adcValues[2];
-    uint16_t throttleMax = adcValues[2];
+    int updateCount = 0;
 
     while (1) {
-        // Collect approximately 100 ms of readings
-        for (int i = 0; i < 100; i++) {
-            uint16_t throttle = adcValues[2];
 
-            // Ignore unexpected zero readings
-            if (throttle != 0) {
-                if (throttle < throttleMin) {
-                    throttleMin = throttle;
-                }
+        // Run physics once per TIM6 update
+        if (tim6UpdateReady()) {
 
-                if (throttle > throttleMax) {
-                    throttleMax = throttle;
-                }
+            // Read brake button (active LOW)
+            bool brakePressed = (digitalRead(BRAKE_PIN) == 0);
+
+            // Process ADC and GPIO inputs
+            ControlInputs inputs = processInputs(
+                adcValues[0],
+                adcValues[1],
+                adcValues[2],
+                brakePressed
+            );
+
+            // Update vehicle physics
+            updateVehiclePhysics(&car, &inputs, PHYSICS_DT);
+
+            updateCount++;
+
+            // Print every 100 physics updates
+            if (updateCount >= 100) {
+                updateCount = 0;
+
+                // Convert heading from radians to degrees
+                float headingDegrees = car.heading * 180.0f / PI;
+
+                printf("X: %d | Y: %d | Heading: %d deg\n",
+                       (int)car.x,
+                       (int)car.y,
+                       (int)headingDegrees);
             }
-
-            delay_micros(TIM7, 1000);
         }
-
-        // Print current throttle and recorded extremes
-        printf("Throttle: %u | Min: %u | Max: %u\n",
-               adcValues[2], throttleMin, throttleMax);
     }
 }

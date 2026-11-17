@@ -117,3 +117,19 @@ void togglePin(int gpio_pin) {
 	// Use XOR to toggle
 	GPIO_PORT_PTR->ODR ^= (1 << pin_offset);
 }
+
+
+void pinResistor(int pin, int setting) {
+    GPIO_TypeDef *GPIO_PORT_PTR = gpioPinToBase(pin);
+    int pin_offset = gpioPinOffset(pin);
+
+    // Clear the existing pull-up/pull-down configuration
+    GPIO_PORT_PTR->PUPDR &= ~(0b11 << (2 * pin_offset));
+
+    if (setting == GPIO_PULL_UP) {
+        GPIO_PORT_PTR->PUPDR |= (0b01 << (2 * pin_offset));
+    }
+    else if (setting == GPIO_PULL_DOWN) {
+        GPIO_PORT_PTR->PUPDR |= (0b10 << (2 * pin_offset));
+    }
+}

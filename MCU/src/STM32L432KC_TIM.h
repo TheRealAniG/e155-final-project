@@ -23,4 +23,6 @@ void initTIM6ADC(void);
 
 void startTIM6ADC(void);
 
+int tim6UpdateReady(void);
+
 #endif // STM32L4_TIM_H
