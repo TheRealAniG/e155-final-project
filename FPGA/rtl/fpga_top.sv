@@ -1,11 +1,12 @@
-//Description: VGA demo top; UPduino OSC jumper supplies 12 MHz on GPIO20.
-// Radiant pixel_pll IP generates 25.125 MHz (59.82 Hz with 800x525 timing).
+//Description: VGA demo top; temporarily use nominal 24 MHz HSOSC for comparison.
+// PLL configuration is preserved below for restoring the external clock.
 module fpga_top #(
     parameter int RGB_BITS = 4,
     parameter BITMAP = "../assets/car.mem",
     parameter PALETTE = "../assets/car_palette.mem"
 ) (
-    input  logic reset_n, clk_12m,
+    input  logic reset_n, 
+	//input logic clk_12m,
     output logic [RGB_BITS-1:0] vga_red, vga_green, vga_blue,
     output logic vga_hsync, vga_vsync
 );
@@ -17,22 +18,29 @@ module fpga_top #(
     logic [23:0] rgb;
     logic [3:0] hsync_q, vsync_q;
     logic clk_pix;
-    logic pll_locked;
+    //logic pll_locked;
+
+    HSOSC #(.CLKHF_DIV("0b01")) i_HSOSC (
+        .CLKHFPU(1'b1),
+        .CLKHFEN(1'b1),
+        .CLKHF(clk_pix)
+    );
 
     // Generate pixel_pll in Radiant IP Catalog: 12 MHz in, 25.175 MHz
     // requested, SIMPLE feedback, one output, and Enable Lock Port checked.
-    pixel_pll i_PIXEL_PLL (
-        .ref_clk_i(clk_12m),
-        .rst_n_i(reset_n),
-        .lock_o(pll_locked),
-        .outcore_o(),
-        .outglobal_o(clk_pix)
-    );
+    //pixel_pll i_PIXEL_PLL (
+        //.ref_clk_i(clk_12m),
+        //.rst_n_i(reset_n),
+        //.lock_o(pll_locked),
+        //.outcore_o(),
+        //.outglobal_o(clk_pix)
+    //);
 
     //Reset synchronizer
     reset_sync i_RESET_SYNC (
         .clk(clk_pix),
-        .reset_n(reset_n && pll_locked),
+        //.reset_n(reset_n && pll_locked),
+        .reset_n(reset_n),
         .reset_sync_n(reset_pix_n)
     );
 
