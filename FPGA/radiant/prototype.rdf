@@ -57,7 +57,13 @@
         <Source name="lap_sim/lap_sim.spf" type="Simulation Project File" type_short="SPF">
             <Options/>
         </Source>
+        <Source name="prototype.pdc" type="Physical Constraints File" type_short="PDC">
+            <Options/>
+        </Source>
         <Source name="render_sim/render_sim.spf" type="Simulation Project File" type_short="SPF">
+            <Options/>
+        </Source>
+        <Source name="source/impl_1.xcf" type="Programming Project File" type_short="Programming">
             <Options/>
         </Source>
         <Source name="sprite_sim/sprite_sim.spf" type="Simulation Project File" type_short="SPF">
