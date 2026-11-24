@@ -39,3 +39,4 @@ sim/work/
 /radiant/**/*.tops
 /radiant/**/source_files.lst
 /radiant/**/sim_para.tcl
+/sim/

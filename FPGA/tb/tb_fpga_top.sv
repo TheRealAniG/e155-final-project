@@ -14,7 +14,8 @@ module tb_fpga_top;
 
     fpga_top #(
         .BITMAP("../../assets/car.mem"),
-        .PALETTE("../../assets/car_palette.mem")
+        .PALETTE("../../assets/car_palette.mem"),
+        .MAP_FILE("../../assets/maps/rectangle.mem")
     ) dut (
         .reset_n(reset_n),
         .vga_red(vga_red),

@@ -13,6 +13,8 @@
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/track_renderer.sv" 
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_track_frame.sv" 
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/checkpoint_arches.sv"
+"../../rtl/tile_palette.sv"
+"../../rtl/tile_map_renderer.sv"
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/race_scene.sv" 
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/rtl/car_sprite.sv" 
 "C:/Users/thanderson/Documents/GitHub/e155-final-project/FPGA/tb/tb_sprite_frame.sv" 

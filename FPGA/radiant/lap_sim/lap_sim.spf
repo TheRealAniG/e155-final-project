@@ -8,6 +8,9 @@
     <Source include="none" langstandard="System Verilog" path="../rtl/demo_motion.sv" type="VERILOG" worklib="work"/>
     <Source include="none" langstandard="System Verilog" path="../rtl/track_renderer.sv" type="VERILOG" worklib="work"/>
     <Source include="none" langstandard="System Verilog" path="../tb/tb_track_frame.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/checkpoint_arches.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/tile_palette.sv" type="VERILOG" worklib="work"/>
+    <Source include="none" langstandard="System Verilog" path="../rtl/tile_map_renderer.sv" type="VERILOG" worklib="work"/>
     <Source include="none" langstandard="System Verilog" path="../rtl/race_scene.sv" type="VERILOG" worklib="work"/>
     <Source include="none" langstandard="System Verilog" path="../rtl/car_sprite.sv" type="VERILOG" worklib="work"/>
     <Source include="none" langstandard="System Verilog" path="../tb/tb_sprite_frame.sv" type="VERILOG" worklib="work"/>

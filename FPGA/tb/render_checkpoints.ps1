@@ -8,12 +8,14 @@ New-Item -ItemType Directory -Force -Path $outputDir | Out-Null
 Push-Location $outputDir
 try {
     & $Qrun -batch -sv -top tb_checkpoint_arches `
+        ../../rtl/tile_palette.sv ../../rtl/tile_map_renderer.sv `
         ../../rtl/car_sprite.sv ../../rtl/checkpoint_arches.sv ../../rtl/race_scene.sv `
         ../../tb/tb_checkpoint_arches.sv -do 'run -all; quit -f'
     if ($LASTEXITCODE -ne 0) { throw "Checkpoint checks failed: $LASTEXITCODE" }
     & $Qrun -batch -sv -top tb_physics_frames '-gFRAMES=9' `
         '-gPOSES=../../tb/checkpoint_poses.txt' `
         ../../rtl/lab2_ta_counter.sv ../../rtl/vga_timing.sv `
+        ../../rtl/tile_palette.sv ../../rtl/tile_map_renderer.sv `
         ../../rtl/car_sprite.sv ../../rtl/checkpoint_arches.sv ../../rtl/race_scene.sv `
         ../../tb/tb_physics_frames.sv -do 'run -all; quit -f'
     if ($LASTEXITCODE -ne 0) { throw "Checkpoint rendering failed: $LASTEXITCODE" }

@@ -1,14 +1,15 @@
-//Description: VGA demo top; temporarily use nominal 24 MHz HSOSC for comparison.
-// PLL configuration is preserved below for restoring the external clock.
+//Description: VGA demo top; 12 MHz external reference, 25.125 MHz pixel PLL.
+// Raw PLL lock is exposed on GPIO6 for scope diagnosis.
 module fpga_top #(
     parameter int RGB_BITS = 4,
     parameter BITMAP = "../assets/car.mem",
-    parameter PALETTE = "../assets/car_palette.mem"
+    parameter PALETTE = "../assets/car_palette.mem",
+    parameter MAP_FILE = "../assets/maps/rectangle.mem"
 ) (
-    input  logic reset_n, 
-	//input logic clk_12m,
+    input  logic reset_n, clk_12m,
     output logic [RGB_BITS-1:0] vga_red, vga_green, vga_blue,
-    output logic vga_hsync, vga_vsync
+    output logic vga_hsync, vga_vsync,
+    output wire pll_lock_debug
 );
     logic reset_pix_n;
     logic signed [10:0] sx, sy;
@@ -18,29 +19,30 @@ module fpga_top #(
     logic [23:0] rgb;
     logic [3:0] hsync_q, vsync_q;
     logic clk_pix;
-    //logic pll_locked;
+    logic pll_locked;
+    assign pll_lock_debug = pll_locked;
 
-    HSOSC #(.CLKHF_DIV("0b01")) i_HSOSC (
-        .CLKHFPU(1'b1),
-        .CLKHFEN(1'b1),
-        .CLKHF(clk_pix)
-    );
+    //HSOSC #(.CLKHF_DIV("0b01")) i_HSOSC (
+        //.CLKHFPU(1'b1),
+        //.CLKHFEN(1'b1),
+        //.CLKHF(clk_pix)
+    //);
 
     // Generate pixel_pll in Radiant IP Catalog: 12 MHz in, 25.175 MHz
     // requested, SIMPLE feedback, one output, and Enable Lock Port checked.
-    //pixel_pll i_PIXEL_PLL (
-        //.ref_clk_i(clk_12m),
-        //.rst_n_i(reset_n),
-        //.lock_o(pll_locked),
-        //.outcore_o(),
-        //.outglobal_o(clk_pix)
-    //);
+    pixel_pll i_PIXEL_PLL (
+        .ref_clk_i(clk_12m),
+        .rst_n_i(reset_n),
+        .lock_o(pll_locked),
+        .outcore_o(),
+        .outglobal_o(clk_pix)
+    );
 
     //Reset synchronizer
     reset_sync i_RESET_SYNC (
         .clk(clk_pix),
-        //.reset_n(reset_n && pll_locked),
-        .reset_n(reset_n),
+        .reset_n(reset_n && pll_locked),
+        //.reset_n(reset_n),
         .reset_sync_n(reset_pix_n)
     );
 
@@ -84,7 +86,8 @@ module fpga_top #(
     //Track, car, finish line, and checkpoint arches
     race_scene #(
         .BITMAP(BITMAP),
-        .PALETTE(PALETTE)
+        .PALETTE(PALETTE),
+        .MAP_FILE(MAP_FILE)
     ) i_RACE_SCENE (
         .clk_pix(clk_pix),
         .visible(visible),

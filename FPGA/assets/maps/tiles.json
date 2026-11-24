@@ -1,0 +1,40 @@
+{
+  "format_version": 1,
+  "tiles": [
+    {
+      "id": 0,
+      "name": "grass",
+      "rgb": "287348",
+      "surface": "grass",
+      "solid": false
+    },
+    {
+      "id": 1,
+      "name": "asphalt",
+      "rgb": "454951",
+      "surface": "asphalt",
+      "solid": false
+    },
+    {
+      "id": 2,
+      "name": "gravel",
+      "rgb": "d9bd80",
+      "surface": "gravel",
+      "solid": false
+    },
+    {
+      "id": 3,
+      "name": "wall_red",
+      "rgb": "d93636",
+      "surface": "wall",
+      "solid": true
+    },
+    {
+      "id": 4,
+      "name": "wall_white",
+      "rgb": "f4f4f4",
+      "surface": "wall",
+      "solid": true
+    }
+  ]
+}

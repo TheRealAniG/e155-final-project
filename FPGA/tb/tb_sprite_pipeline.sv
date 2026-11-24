@@ -10,6 +10,18 @@ module tb_sprite_pipeline;
     logic [23:0] palette [0:15];
     integer x, y, col, row, index;
     logic road, finish_line;
+    function automatic logic [23:0] background_pixel(input int x, y);
+        if (x >= 48 && x < 592 && y >= 48 && y < 432 &&
+            !(x >= 144 && x < 496 && y >= 144 && y < 336)) return 24'h454951;
+        if (x >= 16 && x < 624 && y >= 16 && y < 464 &&
+            !(x >= 32 && x < 608 && y >= 32 && y < 448))
+            return ((x / 16 + y / 16) % 2) ? 24'hf4f4f4 : 24'hd93636;
+        if ((x >= 32 && x < 608 && y >= 32 && y < 448 &&
+             !(x >= 48 && x < 592 && y >= 48 && y < 432)) ||
+            (x >= 144 && x < 496 && y >= 144 && y < 336 &&
+             !(x >= 160 && x < 480 && y >= 160 && y < 320))) return 24'hd9bd80;
+        return 24'h287348;
+    endfunction
     always #5 clk = ~clk;
     race_scene #(.BITMAP("../../assets/car.mem"), .PALETTE("../../assets/car_palette.mem")) dut
         (.clk_pix(clk), .visible(visible), .sx(sx), .sy(sy),
@@ -18,11 +30,18 @@ module tb_sprite_pipeline;
     initial begin
         $readmemh("../../assets/car.mem", bitmap);
         $readmemh("../../assets/car_palette.mem", palette);
-        for (int n = 0; n < 10000; n++) begin
+        for (int n = 0; n < 317200; n++) begin
             @(negedge clk);
             // Change position and heading every pixel to expose stage skew.
             cx = 11'(280 + n % 3); cy = 11'(96 + n % 5);
             sx = 11'(250 + n % 65); sy = 11'(64 + (n / 65) % 65);
+            // Also compare every screen pixel with an independent geometry oracle,
+            // including tile edges, finish edges, arches, and the grass infield.
+            if (n >= 10000) begin
+                sx = 11'((n - 10000) % 640);
+                sy = 11'((n - 10000) / 640);
+                cx = 96; cy = 96;
+            end
             case (n % 5)
                 0: begin c = 256; s = 0; end
                 1: begin c = 0; s = 256; end
@@ -45,12 +64,12 @@ module tb_sprite_pipeline;
             else if (arch_opaque) expected[0] = arch_rgb;
             else if (index != 0) expected[0] = palette[index];
             else if (finish_line) expected[0] = (sx[3] ^ sy[3]) ? 24'hffffff : 24'h101010;
-            else expected[0] = road ? 24'h454951 : 24'h287348;
+            else expected[0] = background_pixel(int'(sx), int'(sy));
             @(posedge clk); #1;
             if (n >= 3 && rgb !== expected[3])
                 $fatal(1, "Pixel %0d: got %h expected %h", n, rgb, expected[3]);
         end
-        $display("PASS: 10000 pipelined pixels, rotations, blanking and composition");
+        $display("PASS: 317200 pipelined pixels, full screen, rotations, blanking and composition");
         $finish;
     end
 endmodule

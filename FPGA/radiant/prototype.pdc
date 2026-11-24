@@ -1,7 +1,7 @@
 ldc_set_location -site {2} [get_ports {vga_blue[0]}]
-# External PLL clock disabled during HSOSC comparison.
-# ldc_set_location -site {20} [get_ports clk_12m]
-# create_clock -name {clk_12m} -period 83.333 [get_ports clk_12m]
+ldc_set_location -site {20} [get_ports clk_12m]
+create_clock -name {clk_12m} -period 83.333 [get_ports clk_12m]
+ldc_set_location -site {6} [get_ports pll_lock_debug]
 ldc_set_location -site {12} [get_ports {vga_blue[1]}]
 ldc_set_location -site {13} [get_ports {vga_blue[2]}]
 ldc_set_location -site {18} [get_ports {vga_blue[3]}]
