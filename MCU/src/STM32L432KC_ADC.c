@@ -67,9 +67,9 @@ void initADC(void){
     ADC1->SMPR2 &= ~ADC_SMPR2_SMP16;
     ADC1->SMPR2 |= (0b110 << ADC_SMPR2_SMP16_Pos);
 
-    // Throttle: PA5, ADC channel 10
-    ADC1->SMPR2 &= ~ADC_SMPR2_SMP10;
-    ADC1->SMPR2 |= (0b110 << ADC_SMPR2_SMP10_Pos);
+    // Throttle: PA6, ADC channel 11
+    ADC1->SMPR2 &= ~ADC_SMPR2_SMP11;
+    ADC1->SMPR2 |= (0b110 << ADC_SMPR2_SMP11_Pos);
 
     // Configure sequence length for 3 conversions
     ADC1->SQR1 &= ~ADC_SQR1_L;
@@ -82,10 +82,11 @@ void initADC(void){
     // Second conversion: Joystick Y (channel 16)
     ADC1->SQR1 &= ~ADC_SQR1_SQ2;
     ADC1->SQR1 |= (JOYSTICK_Y_CHANNEL << ADC_SQR1_SQ2_Pos);
-
-    // Third conversion: Throttle (channel 10)
+    
+    // Third conversion: Throttle (channel 11)
     ADC1->SQR1 &= ~ADC_SQR1_SQ3;
     ADC1->SQR1 |= (THROTTLE_CHANNEL << ADC_SQR1_SQ3_Pos);
+    
 
     // Disable continuous conversion mode
     ADC1->CFGR &= ~ADC_CFGR_CONT;

@@ -11,12 +11,12 @@
 #include <stm32l432xx.h>
 #include "STM32L432KC_GPIO.h"
 
-#define SPI_MOSI_PIN  PA12
-#define SPI_MISO_PIN  PA6
-#define SPI_SCK_PIN   PA5
-#define SPI_CE_PIN    PA8
+#define SPI_MOSI_PIN PA12
+#define SPI_MISO_PIN PA11
+#define SPI_SCK_PIN  PA5
+#define SPI_CE_PIN   PA8
 
-#define SPI_AF        5
+#define SPI_AF 5
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
@@ -34,5 +34,7 @@ void initSPI(int br, int cpol, int cpha);
  *    -- send: the character to send over SPI
  *    -- return: the character received over SPI */
 char spiSendReceive(char send);
+
+void spiSendCarState(int16_t x, int16_t y, int16_t cosQ8, int16_t sinQ8);
 
 #endif

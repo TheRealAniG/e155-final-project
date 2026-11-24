@@ -10,8 +10,8 @@
 
 #define JOYSTICK_DEADZONE 0.05f
 
-#define THROTTLE_MIN 475.0f
-#define THROTTLE_MAX 3533.0f
+#define THROTTLE_MIN 750.0f
+#define THROTTLE_MAX 3415.0f
 
 // Limit a value to a specified range
 static float limitRange(float value, float min, float max) {

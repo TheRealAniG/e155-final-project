@@ -19,20 +19,21 @@ void initSPI(int br, int cpol, int cpha) {
     GPIOA->AFR[0] &= ~GPIO_AFRL_AFSEL5_Msk;
     GPIOA->AFR[0] |= (SPI_AF << GPIO_AFRL_AFSEL5_Pos);
 
-    // Configure MISO (PA6) to AF5
+    // Configure MISO (PA11) to AF5
     pinMode(SPI_MISO_PIN, GPIO_ALT);
-    GPIOA->AFR[0] &= ~GPIO_AFRL_AFSEL6_Msk;
-    GPIOA->AFR[0] |= (SPI_AF << GPIO_AFRL_AFSEL6_Pos);
+    GPIOA->AFR[1] &= ~GPIO_AFRH_AFSEL11_Msk;
+    GPIOA->AFR[1] |= (SPI_AF << GPIO_AFRH_AFSEL11_Pos);
 
     // Configure MOSI (PA12) to AF5
     pinMode(SPI_MOSI_PIN, GPIO_ALT);
     GPIOA->AFR[1] &= ~GPIO_AFRH_AFSEL12_Msk;
     GPIOA->AFR[1] |= (SPI_AF << GPIO_AFRH_AFSEL12_Pos);
 
+    // Set CE pin high initially
+    digitalWrite(SPI_CE_PIN, PIO_HIGH);
     // Configure CE (PA8) to GPIO output
     pinMode(SPI_CE_PIN, GPIO_OUTPUT);
-    // Set CE pin low initially
-    digitalWrite(SPI_CE_PIN, PIO_LOW);
+
     
     // Enable SPI1 clock
     RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
@@ -93,4 +94,41 @@ char spiSendReceive(char send) {
 
     // Read one byte
     return *((volatile char *) (&SPI1->DR));
+}
+
+
+void spiSendCarState(int16_t x, int16_t y, int16_t cosQ8, int16_t sinQ8) {
+
+    // Construct 10-byte SPI packet
+    uint8_t packet[10] = {
+        0xA5,                              // Start marker
+        (uint8_t)((uint16_t)x >> 8),       // X high byte
+        (uint8_t)x,                        // X low byte
+        (uint8_t)((uint16_t)y >> 8),       // Y high byte
+        (uint8_t)y,                        // Y low byte
+        (uint8_t)((uint16_t)cosQ8 >> 8),   // Cosine high byte
+        (uint8_t)cosQ8,                    // Cosine low byte
+        (uint8_t)((uint16_t)sinQ8 >> 8),   // Sine high byte
+        (uint8_t)sinQ8,                    // Sine low byte
+        0x00                               // Checksum placeholder
+    };
+
+    // Calculate XOR checksum
+    for (int i = 0; i < 9; i++) {
+        packet[9] ^= packet[i];
+    }
+
+    // Select FPGA (active-low CS)
+    digitalWrite(SPI_CE_PIN, PIO_LOW);
+
+    // Transmit packet
+    for (int i = 0; i < 10; i++) {
+        spiSendReceive((char)packet[i]);
+    }
+
+    // Wait until transmission is complete
+    while (SPI1->SR & SPI_SR_BSY);
+
+    // Deselect FPGA
+    digitalWrite(SPI_CE_PIN, PIO_HIGH);
 }

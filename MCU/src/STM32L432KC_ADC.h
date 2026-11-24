@@ -17,12 +17,12 @@
 // Analog input pins
 #define JOYSTICK_X_PIN      PB0
 #define JOYSTICK_Y_PIN      PB1
-#define THROTTLE_PIN        PA5
+#define THROTTLE_PIN        PA6
 
 // Corresponding ADC1 channels
 #define JOYSTICK_X_CHANNEL  15
 #define JOYSTICK_Y_CHANNEL  16
-#define THROTTLE_CHANNEL    10
+#define THROTTLE_CHANNEL    11
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes

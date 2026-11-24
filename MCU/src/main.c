@@ -2,10 +2,13 @@
 #include "STM32L432KC.h"
 #include "InputProcessing.h"
 #include "VehiclePhysics.h"
+#include <math.h>
 
-#define BRAKE_PIN PA0
+
+#define BRAKE_PIN PA10
 #define PHYSICS_DT 0.001f
 #define PI 3.14159265f
+
 
 // Redirect printf output to debug terminal
 int _write(int file, char *ptr, int len) {
@@ -29,6 +32,7 @@ int main(void) {
     initADC();
     initDMA();
     initTIM6ADC();
+    initSPI(4, 0, 0);
 
     // Initialize vehicle at (96, 96), facing right
     CarState car;
@@ -65,16 +69,28 @@ int main(void) {
             updateCount++;
 
             // Print every 100 physics updates
+            
             if (updateCount >= 100) {
                 updateCount = 0;
 
-                // Convert heading from radians to degrees
                 float headingDegrees = car.heading * 180.0f / PI;
 
-                printf("X: %d | Y: %d | Heading: %d deg\n",
+                printf("X: %d | Y: %d | Heading: %d deg | Speed: %d\n",
                        (int)car.x,
                        (int)car.y,
-                       (int)headingDegrees);
+                       (int)headingDegrees,
+                       (int)car.speed);
+
+                // SPI test transmission
+
+
+                // Send test vehicle state over SPI
+                spiSendCarState(
+                    (int16_t)car.x,
+                    (int16_t)car.y,
+                    (int16_t)(cosf(car.heading) * 256.0f),
+                    (int16_t)(sinf(car.heading) * 256.0f)
+                );
             }
         }
     }
