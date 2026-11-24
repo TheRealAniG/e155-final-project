@@ -84,6 +84,7 @@ int main(void) {
                 // SPI test transmission
 
 
+
                 // Send test vehicle state over SPI
                 spiSendCarState(
                     (int16_t)car.x,
