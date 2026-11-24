@@ -11,8 +11,23 @@ ldc_set_location -site {3} [get_ports {vga_green[2]}]
 ldc_set_location -site {45} [get_ports {vga_green[3]}]
 ldc_set_location -site {11} [get_ports {vga_red[0]}]
 ldc_set_location -site {19} [get_ports {vga_red[1]}]
-ldc_set_location -site {21} [get_ports {vga_red[2]}]
-ldc_set_location -site {10} [get_ports {vga_red[3]}]
+ldc_set_location -site {47} [get_ports {vga_red[2]}]
+ldc_set_location -site {48} [get_ports {vga_red[3]}]
 ldc_set_location -site {46} [get_ports vga_vsync]
 ldc_set_location -site {34} [get_ports reset_n]
 ldc_set_location -site {4} [get_ports vga_hsync]
+# E155 v4 carrier: all four SPI signals use onboard SW7 bridges.
+# Switch 2: PA9 CS -> P25. Switch 8: PB3 SCK -> P21.
+# Switch 4: P27 MISO -> PA6. Switch 6: PB5 MOSI -> P10.
+# Older boards use corresponding J5 bridges. Leave other bridges OFF.
+# MCU driver must select PA9 GPIO CS, PB3 AF5 SCK, PA6 AF5 MISO,
+# and PB5 AF5 MOSI (including GPIOB clock and alternate-function setup).
+# PB3 cannot simultaneously provide SWO debug output.
+# VGA red[2] moves from P21 to P47; move its resistor wire as well.
+# VGA red[3] moves from P10 to P48; move its resistor wire as well.
+# P20 is the OSC reference; do not bridge PA11 to P20.
+ldc_set_location -site {21} [get_ports spi_sck]
+ldc_set_location -site {10} [get_ports spi_mosi]
+ldc_set_location -site {25} [get_ports spi_cs_n]
+ldc_set_location -site {27} [get_ports spi_miso]
+ldc_set_port -iobuf {PULLMODE=100K} [get_ports spi_cs_n]

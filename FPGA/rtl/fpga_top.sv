@@ -1,4 +1,4 @@
-//Description: VGA demo top; 12 MHz external reference, 25.125 MHz pixel PLL.
+//Description: VGA top; 12 MHz external reference, working 24 MHz pixel PLL.
 // Raw PLL lock is exposed on GPIO6 for scope diagnosis.
 module fpga_top #(
     parameter int RGB_BITS = 4,
@@ -7,6 +7,8 @@ module fpga_top #(
     parameter MAP_FILE = "../assets/maps/rectangle.mem"
 ) (
     input  logic reset_n, clk_12m,
+    input  logic spi_sck, spi_mosi, spi_cs_n,
+    output wire spi_miso,
     output logic [RGB_BITS-1:0] vga_red, vga_green, vga_blue,
     output logic vga_hsync, vga_vsync,
     output wire pll_lock_debug
@@ -16,6 +18,11 @@ module fpga_top #(
     logic visible, hsync, vsync, vblank_tick;
     logic signed [10:0] car_center_x, car_center_y;
     logic signed [9:0] cos_q8, sin_q8;
+    logic signed [10:0] demo_x, demo_y, received_x, received_y;
+    logic signed [9:0] demo_cos, demo_sin, received_cos, received_sin;
+    logic pose_valid, spi_active;
+    // Ani's sender ignores receive bytes. Status/readback is not implemented.
+    assign spi_miso = 1'b0;
     logic [23:0] rgb;
     logic [3:0] hsync_q, vsync_q;
     logic clk_pix;
@@ -28,8 +35,8 @@ module fpga_top #(
         //.CLKHF(clk_pix)
     //);
 
-    // Generate pixel_pll in Radiant IP Catalog: 12 MHz in, 25.175 MHz
-    // requested, SIMPLE feedback, one output, and Enable Lock Port checked.
+    // Existing pixel_pll IP: 12 MHz in, 24 MHz out, SIMPLE feedback,
+    // one output, and Enable Lock Port checked. Leave clock settings intact.
     pixel_pll i_PIXEL_PLL (
         .ref_clk_i(clk_12m),
         .rst_n_i(reset_n),
@@ -63,25 +70,41 @@ module fpga_top #(
         .clk_pix(clk_pix),
         .reset_n(reset_pix_n),
         .vblank_tick(vblank_tick),
-        .car_center_x(car_center_x),
-        .car_center_y(car_center_y)
+        .car_center_x(demo_x),
+        .car_center_y(demo_y)
     );
 
     //Heading follows the clockwise rectangular demo path
     always_comb begin
-        cos_q8 = 10'sd256;
-        sin_q8 = 10'sd0;
-        if (car_center_x == 544 && car_center_y < 384) begin
-            cos_q8 = 10'sd0;
-            sin_q8 = 10'sd256;
-        end else if (car_center_y == 384 && car_center_x > 96) begin
-            cos_q8 = -10'sd256;
-            sin_q8 = 10'sd0;
-        end else if (car_center_x == 96 && car_center_y > 96) begin
-            cos_q8 = 10'sd0;
-            sin_q8 = -10'sd256;
+        demo_cos = 10'sd256;
+        demo_sin = 10'sd0;
+        if (demo_x == 544 && demo_y < 384) begin
+            demo_cos = 10'sd0;
+            demo_sin = 10'sd256;
+        end else if (demo_y == 384 && demo_x > 96) begin
+            demo_cos = -10'sd256;
+            demo_sin = 10'sd0;
+        end else if (demo_x == 96 && demo_y > 96) begin
+            demo_cos = 10'sd0;
+            demo_sin = -10'sd256;
         end
     end
+
+    spi_pose_receiver i_SPI_POSE (
+        .clk(clk_pix), .reset_n(reset_pix_n),
+        .spi_sck(spi_sck), .spi_mosi(spi_mosi), .spi_cs_n(spi_cs_n),
+        .pose_valid(pose_valid), .packet_error(),
+        .pose_x(received_x), .pose_y(received_y),
+        .pose_cos(received_cos), .pose_sin(received_sin)
+    );
+    frame_pose i_FRAME_POSE (
+        .clk(clk_pix), .reset_n(reset_pix_n), .vblank_tick(vblank_tick),
+        .pose_valid(pose_valid), .pose_x(received_x), .pose_y(received_y),
+        .pose_cos(received_cos), .pose_sin(received_sin),
+        .demo_x(demo_x), .demo_y(demo_y), .demo_cos(demo_cos), .demo_sin(demo_sin),
+        .spi_active(spi_active), .car_x(car_center_x), .car_y(car_center_y),
+        .car_cos(cos_q8), .car_sin(sin_q8)
+    );
 
     //Track, car, finish line, and checkpoint arches
     race_scene #(

@@ -5,6 +5,10 @@ module tb_fpga_top;
 
     wire clk_pix = dut.clk_pix;
     logic reset_n = 1'b0;
+    logic clk_12m = 0;
+    logic spi_sck = 0, spi_mosi = 0, spi_cs_n = 1;
+    wire spi_miso, pll_lock_debug;
+    always #41.6665 clk_12m = ~clk_12m;
     logic [3:0] vga_red, vga_green, vga_blue;
     logic vga_hsync, vga_vsync;
     logic [11:0] expected_rgb;
@@ -18,6 +22,9 @@ module tb_fpga_top;
         .MAP_FILE("../../assets/maps/rectangle.mem")
     ) dut (
         .reset_n(reset_n),
+        .clk_12m(clk_12m),
+        .spi_sck(spi_sck), .spi_mosi(spi_mosi), .spi_cs_n(spi_cs_n),
+        .spi_miso(spi_miso), .pll_lock_debug(pll_lock_debug),
         .vga_red(vga_red),
         .vga_green(vga_green),
         .vga_blue(vga_blue),
@@ -25,9 +32,26 @@ module tb_fpga_top;
         .vga_vsync(vga_vsync)
     );
 
+    task automatic send_pose(input int px, py, pc, ps);
+        logic [79:0] packet;
+        logic [7:0] sum;
+        packet = {8'ha5, 16'(px), 16'(py), 16'(pc), 16'(ps), 8'h00};
+        sum = 0;
+        for (int b = 1; b < 10; b++) sum ^= packet[8*b +: 8];
+        packet[7:0] = sum;
+        #73; spi_cs_n = 0; #250;
+        for (int b = 79; b >= 0; b--) begin
+            spi_mosi = packet[b];
+            #200; spi_sck = 1;
+            #200; spi_sck = 0;
+        end
+        #100; spi_cs_n = 1; #350;
+    endtask
+
     initial begin
-        repeat (2) @(negedge clk_pix);
+        repeat (2) @(negedge clk_12m);
         reset_n = 1'b1;
+        wait (dut.pll_locked);
         // First edge fills the reset synchronizer; second releases reset.
         @(negedge clk_pix);
         if (dut.reset_pix_n !== 1'b0) $fatal(1, "Reset released too early");
@@ -67,6 +91,26 @@ module tb_fpga_top;
         if (frame_x !== 100 || frame_y !== 96)
             $fatal(1, "Demo motion did not advance during blanking");
 
+        // Exercise the real top-level receiver/mux while a frame is visible.
+        wait (dut.visible);
+        frame_x = dut.car_center_x; frame_y = dut.car_center_y;
+        send_pose(400, 220, 0, -256);
+        send_pose(420, 240, 181, 181);
+        if (dut.spi_active || dut.car_center_x !== frame_x || dut.car_center_y !== frame_y)
+            $fatal(1, "SPI pose changed a visible frame");
+        wait (dut.spi_active);
+        #1ns;
+        if (dut.visible || dut.car_center_x !== 420 || dut.car_center_y !== 240 ||
+            dut.cos_q8 !== 181 || dut.sin_q8 !== 181)
+            $fatal(1, "Top-level SPI frame commit failed");
+        wait (dut.visible);
+        repeat (800 * 480) begin
+            @(negedge clk_pix);
+            if (dut.car_center_x !== 420 || dut.car_center_y !== 240 ||
+                dut.cos_q8 !== 181 || dut.sin_q8 !== 181)
+                $fatal(1, "SPI pose changed without a new packet");
+        end
+
         // Assert reset away from a clock edge and require immediate black.
         @(negedge clk_pix);
         #3ns;
@@ -76,12 +120,12 @@ module tb_fpga_top;
             $fatal(1, "Reset must drive black RGB and inactive syncs");
         if (dut.car_center_x !== 96 || dut.car_center_y !== 96)
             $fatal(1, "Reset did not restore demo pose");
-        $display("PASS: VGA top frame counts, output alignment, motion, and reset");
+        $display("PASS: VGA top frame counts, output alignment, demo fallback, SPI takeover, hold, and reset");
         $finish;
     end
 
     initial begin
-        #20ms;
+        #60ms;
         $fatal(1, "VGA top test timed out");
     end
 endmodule

@@ -8,8 +8,10 @@ Push-Location $outputDir
 try {
     $rtlSources = @(Get-ChildItem ../../rtl -Filter *.sv | ForEach-Object { $_.FullName })
     foreach ($top in @('tb_tile_map', 'tb_sprite_pipeline', 'tb_checkpoint_arches', 'tb_vga_timing', 'tb_fpga_top')) {
-        & $Qrun -batch -sv -top $top @rtlSources "../../tb/$top.sv" -do 'onbreak {quit -code 1}; onerror {quit -code 1}; run -all; quit -f'
-        if ($LASTEXITCODE -ne 0) { throw "$top failed: $LASTEXITCODE" }
+        & $Qrun -batch -sv -top $top @rtlSources ../../tb/pixel_pll_model.sv "../../tb/$top.sv" -do 'onbreak {quit -code 1}; onerror {quit -code 1}; run -all; quit -f' 2>&1 | Tee-Object -Variable simulationOutput
+        if ($LASTEXITCODE -ne 0 -or $simulationOutput -match '\*\* (Fatal|Error):|Errors:\s*[1-9]' -or !($simulationOutput -match 'PASS:')) {
+            throw "$top failed (exit $LASTEXITCODE); inspect simulator output"
+        }
     }
 } finally {
     Pop-Location
