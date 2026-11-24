@@ -13,21 +13,22 @@ void initSPI(int br, int cpol, int cpha) {
 
      // Enable port
     gpioEnable(GPIO_PORT_A);
+    gpioEnable(GPIO_PORT_B);
 
-    // Configure SCK (PA5) to AF5
+    // SCK: PB3, AF5
     pinMode(SPI_SCK_PIN, GPIO_ALT);
-    GPIOA->AFR[0] &= ~GPIO_AFRL_AFSEL5_Msk;
-    GPIOA->AFR[0] |= (SPI_AF << GPIO_AFRL_AFSEL5_Pos);
+    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL3_Msk;
+    GPIOB->AFR[0] |= (SPI_AF << GPIO_AFRL_AFSEL3_Pos);
 
-    // Configure MISO (PA11) to AF5
-    pinMode(SPI_MISO_PIN, GPIO_ALT);
-    GPIOA->AFR[1] &= ~GPIO_AFRH_AFSEL11_Msk;
-    GPIOA->AFR[1] |= (SPI_AF << GPIO_AFRH_AFSEL11_Pos);
-
-    // Configure MOSI (PA12) to AF5
+    // MOSI: PB5, AF5
     pinMode(SPI_MOSI_PIN, GPIO_ALT);
-    GPIOA->AFR[1] &= ~GPIO_AFRH_AFSEL12_Msk;
-    GPIOA->AFR[1] |= (SPI_AF << GPIO_AFRH_AFSEL12_Pos);
+    GPIOB->AFR[0] &= ~GPIO_AFRL_AFSEL5_Msk;
+    GPIOB->AFR[0] |= (SPI_AF << GPIO_AFRL_AFSEL5_Pos);
+
+    // MISO: PA6, AF5
+    pinMode(SPI_MISO_PIN, GPIO_ALT);
+    GPIOA->AFR[0] &= ~GPIO_AFRL_AFSEL6_Msk;
+    GPIOA->AFR[0] |= (SPI_AF << GPIO_AFRL_AFSEL6_Pos);
 
     // Set CE pin high initially
     digitalWrite(SPI_CE_PIN, PIO_HIGH);

@@ -11,12 +11,12 @@
 #include <stm32l432xx.h>
 #include "STM32L432KC_GPIO.h"
 
-#define SPI_MOSI_PIN PA12
-#define SPI_MISO_PIN PA11
-#define SPI_SCK_PIN  PA5
-#define SPI_CE_PIN   PA8
+#define SPI_SCK_PIN  PB3
+#define SPI_MOSI_PIN PB5
+#define SPI_MISO_PIN PA6
+#define SPI_CE_PIN   PA9
 
-#define SPI_AF 5
+#define SPI_AF 5 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
